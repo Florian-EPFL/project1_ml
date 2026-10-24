@@ -107,37 +107,6 @@ def impute_median(name, data, replace_nonresponse=False, impute_param=None):
     return data_imputed, impute_param
 
 
-def impute_random(name, data, replace_nonresponse=False, rng=None, impute_param=None):
-    nonresponse_codes = [
-        v
-        for codes in FEATURE_INFO[name]["nonresponse_codes"].values()
-        for v in codes
-    ]
-
-    missing_mask = np.isnan(data)
-
-    if replace_nonresponse:
-        missing_mask |= np.isin(data, nonresponse_codes)
-
-    valid_data = data[~missing_mask]
-
-    if len(valid_data) == 0:
-        return data.copy()
-
-    if rng is None:
-        rng = np.random.default_rng()
-
-    data_imputed = data.copy()
-    n_missing = np.sum(missing_mask)
-
-    data_imputed[missing_mask] = rng.choice(
-        valid_data,
-        size=n_missing,
-        replace=True
-    )
-
-    return data_imputed
-
 
 
 
@@ -177,5 +146,4 @@ def standardize_feature(feature, name):
             feature = (feature - mean) / std
 
     return feature
-
 
