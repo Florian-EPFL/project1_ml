@@ -1,47 +1,32 @@
 import numpy as np
 from feature_metadata import FEATURE_INFO
-import csv
-import os
+import matplotlib.pyplot as plt
 
-#***** for using the data sets ******
 
-def check_header(x_train, path):
-    with open(os.path.join(path, "x_train.csv")) as f:
-        reader = csv.reader(f)
-        header = next(reader)
+#************** testing functions **************
+def plot_feature_distribution(data, info, is_continuous=False):
+    print(info)
+    missing_cols = np.isnan(data).sum()
+    print(f"missing data: {missing_cols} / {len(data)}")
 
-    # remove index
-    header = header[1:]
+    values, counts = np.unique(data, return_counts=True)
 
-    # check header list size against shape of x_trian
-    if int(len(header)) == int(x_train.shape[1]): 
-        print("Header okay!")
-    return np.array(header)
+    print(f"possible values: {values}")
 
-# takes name as argument, return the data column for that name
-def get_column_by_name(name, header, x_train):
-    idx = header.index(name)
-    column = x_train[:, idx]
-    return column, idx
-
-# **********************************
-
-# ********* for cleaning ***********
-def remove_features_threshold_mask(data, threshold=0.5):
-    # calculate percentage missing data per feature
-    missing_per_feature = np.isnan(data).sum(axis=0) / data.shape[0]
-
-    mask = missing_per_feature <= threshold
-    return mask
-
-def remove_data_type_mask(header, data_type):
-    mask = [FEATURE_INFO[name]["data_type"] != data_type for name in header]
-    return mask
-# *******************************
-
+    if is_continuous:
+        plt.hist(data, bins=100)
+    else:
+        plt.bar(values, counts)
+    plt.xlabel("Value")
+    plt.ylabel("Count")
+    plt.title("Occurrences of each value")
+    plt.show()
 
 
 # ************* imputation techniques *************
+def impute_none(name, data, replace_nonresponse=False, impute_param=None):
+    return data.copy(), impute_param
+
 def impute_mode(name, data, replace_nonresponse=False, impute_param=None):
     nonresponse_codes = [
         v
@@ -51,6 +36,7 @@ def impute_mode(name, data, replace_nonresponse=False, impute_param=None):
 
     # tracking what data is missing
     missing_mask = np.isnan(data)
+    data_imputed = data.copy()
 
     # adding non response codes as missing data if asked
     if replace_nonresponse:
@@ -62,13 +48,12 @@ def impute_mode(name, data, replace_nonresponse=False, impute_param=None):
 
         if len(non_missing_data) == 0:
             print(f"WARNING: this feature ({name}) is empty")
-            return data, 0
+            return data_imputed, 0
 
         # get the most common value and store it: this is going to be imputed
         values, counts = np.unique(non_missing_data, return_counts=True)
         impute_param = values[np.argmax(counts)]
 
-    data_imputed = data.copy()
     data_imputed[missing_mask] = impute_param
 
     return data_imputed, impute_param
@@ -83,8 +68,9 @@ def impute_median(name, data, replace_nonresponse=False, impute_param=None):
         for v in codes
     ]
 
-    # tracking what data is missing
+    # tracking what data is missing and copyigng data
     missing_mask = np.isnan(data)
+    data_imputed = data.copy()
 
     # adding non response codes as missing data if asked
     if replace_nonresponse:
@@ -96,17 +82,48 @@ def impute_median(name, data, replace_nonresponse=False, impute_param=None):
 
         if len(non_missing_data) == 0:
             print(f"WARNING: this feature ({name}) is empty")
-            return data.copy(), 0
+            return data_imputed, None
 
         # get the median value of the test set
         impute_param = np.median(non_missing_data)
-
-    data_imputed = data.copy()
+    
     data_imputed[missing_mask] = impute_param
 
     return data_imputed, impute_param
 
 
+def impute_random(name, data, replace_nonresponse=False, impute_param=None, seed=67):
+    nonresponse_codes = [
+        v
+        for codes in FEATURE_INFO[name]["nonresponse_codes"].values()
+        for v in codes
+    ]
+
+    missing_mask = np.isnan(data)
+    data_imputed = data.copy()
+
+    if replace_nonresponse:
+        missing_mask |= np.isin(data, nonresponse_codes)
+
+    if impute_param is None:
+        non_missing_data = data[~missing_mask]
+        rng = np.random.default_rng(seed)
+
+        impute_param = {"distribution": non_missing_data, "rng": rng}
+
+        if len(non_missing_data) == 0:
+            print(f"WARNING: this feature ({name}) is empty")
+            return data_imputed, impute_param
+        
+    n_missing = np.sum(missing_mask)
+
+    data_imputed[missing_mask] = impute_param["rng"].choice(
+        impute_param["distribution"],
+        size=n_missing,
+        replace=True
+    )
+
+    return data_imputed, impute_param
 
 
 

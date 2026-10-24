@@ -1,10 +1,12 @@
 import numpy as np
 from feature_metadata import FEATURE_INFO
-from feature_imputation import impute_mode, impute_median, standardize_feature
+from feature_imputation import impute_mode, impute_none, impute_median, standardize_feature, impute_random
 
 IMPUTE = {
+    "none": impute_none,
     "mode": impute_mode,
     "median": impute_median,
+    "random": impute_random,
 }
 
 # show why (-1, 1) is used for binary features instead of (0, 1)
