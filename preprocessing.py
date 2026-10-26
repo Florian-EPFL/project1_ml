@@ -1,10 +1,11 @@
 import csv
 import os
 import numpy as np
-from feature_metadata import FEATURE_INFO
+from feature_metadata import FEATURE_INFO, EXCLUDED_FEATURES
 from feature_transformations import *
 
-# feature types we can transform for now (other types will be added here later)
+# transformation for each data type; "encoded" features are not transformed
+# the dataset also contains cleaned derived versions of them
 TRANSFORMS = {
     "binary": transform_binary,
     "categorical": transform_categorical,
@@ -12,16 +13,6 @@ TRANSFORMS = {
     "discrete": transform_discrete,
     "continuous": transform_continuous,
 }
-
-# excluded features (IDs, survey weights, dates), copied from the notebook
-EXCLUDED_FEATURES = [
-    "SEQNO", "_PSU", "_STSTR", "_STRWT",
-    "_RAWRAKE", "_WT2RAKE", "_CLLCPWT", "_LLCPWT", "_DUALCOR",
-    "CTELENUM", "CTELNUM1", "CELLFON2", "STATERES",
-    "COLGHOUS", "CCLGHOUS", "LADULT", "DISPCODE", "QSTVER",
-    "FMONTH", "IDATE", "IDAY", "IYEAR", "FLSHTMY2", "HIVTSTD3"
-]
-
 
 def check_header(x_train, path):
 
@@ -86,14 +77,18 @@ def build_feature_matrix(x_train, x_test, header):
         # skip excluded features
         if name in EXCLUDED_FEATURES:
             continue
-        # skip feature types we cannot transform yet
+        # skip encoded features (see TRANSFORMS)
         data_type = FEATURE_INFO[name]["data_type"]
         if data_type not in TRANSFORMS:
             continue
 
-        # transform train (valid values computed), then test (train valid values reused)
-        transformed_x_train, valid_values, impute_param = TRANSFORMS[data_type](name, x_train[:, i], replace_nonresponse=True, )
-        transformed_x_test, _, _ = TRANSFORMS[data_type](name, x_test[:, i], valid_values, replace_nonresponse=True, impute_param=impute_param)
+        # transform train (valid values, imputation and standardization parameters computed),
+        # then test (the train parameters are reused)
+        transformed_x_train, valid_values, impute_param, standardize_param = TRANSFORMS[data_type](
+            name, x_train[:, i], replace_nonresponse=True)
+        transformed_x_test, _, _, _ = TRANSFORMS[data_type](
+            name, x_test[:, i], valid_values, replace_nonresponse=True,
+            impute_param=impute_param, standardize_param=standardize_param)
 
         # binary returns a (N,) vector and categorical returns uint8 -> everything to (N, k) float
         transformed_x_train = transformed_x_train.reshape(x_train.shape[0], -1).astype(float)

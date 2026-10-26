@@ -2,173 +2,98 @@
 # each group contains a list of original and derived features
 
 FEATURE_GROUPS = {
-    "survey_administration": {
-        "original": [
-            "_STATE", "FMONTH", "IDATE", "IMONTH", "IDAY", "IYEAR", "DISPCODE", "SEQNO", "_PSU",
-            "CTELENUM", "PVTRESD1", "COLGHOUS", "STATERES", "CELLFON3", "LADULT", "NUMADULT",
-            "NUMMEN", "NUMWOMEN", "CTELNUM1", "CELLFON2", "CADULT", "PVTRESD2", "CCLGHOUS",
-            "CSTATE", "LANDLINE", "HHADULT", "QSTVER", "QSTLANG", "MSCODE"
-        ],
-        "derived": [
-            "_STSTR", "_STRWT", "_RAWRAKE", "_WT2RAKE", "_CLLCPWT", "_DUALUSE", "_DUALCOR", "_LLCPWT"
-        ]
-    },
+    "survey_administration": [
+        "_STATE", "FMONTH", "IDATE", "IMONTH", "IDAY", "IYEAR", "DISPCODE", "SEQNO",
+        "_PSU", "CTELENUM", "PVTRESD1", "COLGHOUS", "STATERES", "CELLFON3", "LADULT",
+        "NUMADULT", "NUMMEN", "NUMWOMEN", "CTELNUM1", "CELLFON2", "CADULT", "PVTRESD2",
+        "CCLGHOUS", "CSTATE", "LANDLINE", "HHADULT", "QSTVER", "QSTLANG", "MSCODE",
+        "_STSTR", "_STRWT", "_RAWRAKE", "_WT2RAKE", "_CLLCPWT", "_DUALUSE", "_DUALCOR",
+        "_LLCPWT"],
 
-    "demographics_socioeconomic": {
-        "original": [
-            "SEX", "MARITAL", "EDUCA", "RENTHOM1", "NUMHHOL2", "NUMPHON2", "CPDEMO1",
-            "VETERAN3", "EMPLOY1", "CHILDREN", "INCOME2", "INTERNET", "PREGNANT",
-            "SXORIENT", "TRNSGNDR"
-        ],
-        "derived": [
-            "_PRACE1", "_MRACE1", "_HISPANC", "_RACE", "_RACEG21", "_RACEGR3", "_RACE_G1",
-            "_AGEG5YR", "_AGE65YR", "_AGE80", "_AGE_G", "_CHLDCNT", "_EDUCAG", "_INCOMG"
-        ]
-    },
+    "demographics_socioeconomic": [
+        "SEX", "MARITAL", "EDUCA", "RENTHOM1", "NUMHHOL2", "NUMPHON2", "CPDEMO1",
+        "VETERAN3", "EMPLOY1", "CHILDREN", "INCOME2", "INTERNET", "PREGNANT",
+        "SXORIENT", "TRNSGNDR", "_PRACE1", "_MRACE1", "_HISPANC", "_RACE", "_RACEG21", 
+        "_RACEGR3", "_RACE_G1", "_AGEG5YR", "_AGE65YR", "_AGE80", "_AGE_G", "_CHLDCNT", 
+        "_EDUCAG", "_INCOMG"],
 
-    "anthropometrics": {
-        "original": ["WEIGHT2", "HEIGHT3"],
-        "derived": ["HTIN4", "HTM4", "WTKG3", "_BMI5", "_BMI5CAT", "_RFBMI5"]
-    },
+    "anthropometrics": [
+        "WEIGHT2", "HEIGHT3", "HTIN4", "HTM4", "WTKG3", "_BMI5", "_BMI5CAT", "_RFBMI5"],
 
-    "general_health_function": {
-        "original": [
-            "GENHLTH", "PHYSHLTH", "MENTHLTH", "POORHLTH", "QLACTLM2", "USEEQUIP",
-            "BLIND", "DECIDE", "DIFFWALK", "DIFFDRES", "DIFFALON"
-        ],
-        "derived": ["_RFHLTH"]
-    },
+    "general_health_function": [
+        "GENHLTH", "PHYSHLTH", "MENTHLTH", "POORHLTH", "QLACTLM2", "USEEQUIP", "BLIND",
+        "DECIDE", "DIFFWALK", "DIFFDRES", "DIFFALON", "_RFHLTH"],
 
-    "healthcare_access": {
-        "original": ["HLTHPLN1", "PERSDOC2", "MEDCOST", "CHECKUP1"],
-        "derived": ["_HCVU651"]
-    },
+    "healthcare_access": [
+        "HLTHPLN1", "PERSDOC2", "MEDCOST", "CHECKUP1", "_HCVU651"],
 
-    "cardiovascular_metabolic": {
-        "original": [
-            "BPHIGH4", "BPMEDS", "BLOODCHO", "CHOLCHK", "TOLDHI2", "CVDSTRK3",
-            "CHCKIDNY", "DIABETE3", "DIABAGE2", "HAREHAB1", "STREHAB1",
-            "CVDASPRN", "ASPUNSAF", "RLIVPAIN", "RDUCHART", "RDUCSTRK"
-        ],
-        "derived": ["_RFHYPE5", "_CHOLCHK", "_RFCHOL"]
-    },
+    "cardiovascular_metabolic": [
+        "BPHIGH4", "BPMEDS", "BLOODCHO", "CHOLCHK", "TOLDHI2", "CVDSTRK3", "CHCKIDNY",
+        "DIABETE3", "DIABAGE2", "HAREHAB1", "STREHAB1", "CVDASPRN", "ASPUNSAF",
+        "RLIVPAIN", "RDUCHART", "RDUCSTRK", "_RFHYPE5", "_CHOLCHK", "_RFCHOL"],
 
-    "diabetes_management": {
-        "original": [
-            "PDIABTST", "PREDIAB1", "INSULIN", "BLDSUGAR", "FEETCHK2", "DOCTDIAB",
-            "CHKHEMO3", "FEETCHK", "EYEEXAM", "DIABEYE", "DIABEDU"
-        ],
-        "derived": []
-    },
+    "diabetes_management": [
+        "PDIABTST", "PREDIAB1", "INSULIN", "BLDSUGAR", "FEETCHK2", "DOCTDIAB",
+        "CHKHEMO3", "FEETCHK", "EYEEXAM", "DIABEYE", "DIABEDU"],
 
-    "respiratory": {
-        "original": [
-            "ASTHMA3", "ASTHNOW", "CHCCOPD1", "ASTHMAGE", "ASATTACK", "ASERVIST",
-            "ASDRVIST", "ASRCHKUP", "ASACTLIM", "ASYMPTOM", "ASNOSLEP", "ASTHMED3", "ASINHALR"
-        ],
-        "derived": ["_LTASTH1", "_CASTHM1", "_ASTHMS1"]
-    },
+    "respiratory": [
+        "ASTHMA3", "ASTHNOW", "CHCCOPD1", "ASTHMAGE", "ASATTACK", "ASERVIST",
+        "ASDRVIST", "ASRCHKUP", "ASACTLIM", "ASYMPTOM", "ASNOSLEP", "ASTHMED3",
+        "ASINHALR", "_LTASTH1", "_CASTHM1", "_ASTHMS1"],
 
-    "cancer_history": {
-        "original": ["CHCSCNCR", "CHCOCNCR"],
-        "derived": []
-    },
+    "cancer_history": ["CHCSCNCR", "CHCOCNCR"],
 
-    "arthritis_musculoskeletal": {
-        "original": [
-            "HAVARTH3", "LMTJOIN3", "ARTHDIS2", "ARTHSOCL", "JOINPAIN",
-            "ARTTODAY", "ARTHWGT", "ARTHEXER", "ARTHEDU"
-        ],
-        "derived": ["_DRDXAR1", "_LMTACT1", "_LMTWRK1", "_LMTSCL1"]
-    },
+    "arthritis_musculoskeletal": [
+        "HAVARTH3", "LMTJOIN3", "ARTHDIS2", "ARTHSOCL", "JOINPAIN", "ARTTODAY",
+        "ARTHWGT", "ARTHEXER", "ARTHEDU", "_DRDXAR1", "_LMTACT1", "_LMTWRK1", "_LMTSCL1"],
 
-    "tobacco_alcohol": {
-        "original": [
-            "SMOKE100", "SMOKDAY2", "STOPSMK2", "LASTSMK2", "USENOW3",
-            "ALCDAY5", "AVEDRNK2", "DRNK3GE5", "MAXDRNKS"
-        ],
-        "derived": [
-            "_SMOKER3", "_RFSMOK3", "DRNKANY5", "DROCDY3_",
-            "_RFBING5", "_DRNKWEK", "_RFDRHV5"
-        ]
-    },
+    "tobacco_alcohol": [
+        "SMOKE100", "SMOKDAY2", "STOPSMK2", "LASTSMK2", "USENOW3", "ALCDAY5",
+        "AVEDRNK2", "DRNK3GE5", "MAXDRNKS", "_SMOKER3", "_RFSMOK3", "DRNKANY5", 
+        "DROCDY3_", "_RFBING5", "_DRNKWEK", "_RFDRHV5"],
 
-    "diet_nutrition": {
-        "original": [
-            "FRUITJU1", "FRUIT1", "FVBEANS", "FVGREEN", "FVORANG",
-            "VEGETAB1", "WTCHSALT", "LONGWTCH", "DRADVISE"
-        ],
-        "derived": [
-            "FTJUDA1_", "FRUTDA1_", "BEANDAY_", "GRENDAY_", "ORNGDAY_", "VEGEDA1_",
-            "_MISFRTN", "_MISVEGN", "_FRTRESP", "_VEGRESP", "_FRUTSUM", "_VEGESUM",
-            "_FRTLT1", "_VEGLT1", "_FRT16", "_VEG23", "_FRUITEX", "_VEGETEX"
-        ]
-    },
+    "diet_nutrition": [
+        "FRUITJU1", "FRUIT1", "FVBEANS", "FVGREEN", "FVORANG", "VEGETAB1", "WTCHSALT",
+        "LONGWTCH", "DRADVISE", "_FRT16", "_VEG23", "_FRUITEX", "_VEGETEX",
+        "FTJUDA1_", "FRUTDA1_", "BEANDAY_", "GRENDAY_", "ORNGDAY_", "VEGEDA1_",
+        "_MISFRTN", "_MISVEGN", "_FRTRESP", "_VEGRESP", "_FRUTSUM", "_VEGESUM",
+        "_FRTLT1", "_VEGLT1"],
 
-    "physical_activity": {
-        "original": [
-            "EXERANY2", "EXRACT11", "EXEROFT1", "EXERHMM1",
-            "EXRACT21", "EXEROFT2", "EXERHMM2", "STRENGTH"
-        ],
-        "derived": [
-            "_TOTINDA", "METVL11_", "METVL21_", "MAXVO2_", "FC60_", "ACTIN11_", "ACTIN21_",
-            "PADUR1_", "PADUR2_", "PAFREQ1_", "PAFREQ2_", "_MINAC11", "_MINAC21", "STRFREQ_",
-            "PAMISS1_", "PAMIN11_", "PAMIN21_", "PA1MIN_", "PAVIG11_", "PAVIG21_", "PA1VIGM_",
-            "_PACAT1", "_PAINDX1", "_PA150R2", "_PA300R2", "_PA30021",
-            "_PASTRNG", "_PAREC1", "_PASTAE1"
-        ]
-    },
+    "physical_activity": [
+        "EXERANY2", "EXRACT11", "EXEROFT1", "EXERHMM1", "EXRACT21", "EXEROFT2",
+        "EXERHMM2", "STRENGTH", "_PA30021", "_PASTRNG", "_PAREC1", "_PASTAE1",
+        "_TOTINDA", "METVL11_", "METVL21_", "MAXVO2_", "FC60_", "ACTIN11_", "ACTIN21_",
+        "PADUR1_", "PADUR2_", "PAFREQ1_", "PAFREQ2_", "_MINAC11", "_MINAC21",
+        "STRFREQ_", "PAMISS1_", "PAMIN11_", "PAMIN21_", "PA1MIN_", "PAVIG11_",
+        "PAVIG21_", "PA1VIGM_", "_PACAT1", "_PAINDX1", "_PA150R2", "_PA300R2"],
 
-    "preventive_health_screening": {
-        "original": [
-            "SEATBELT", "FLUSHOT6", "FLSHTMY2", "IMFVPLAC", "PNEUVAC3",
-            "HIVTST6", "HIVTSTD3", "WHRTST10",
-            "TETANUS", "HPVADVC2", "HPVADSHT", "SHINGLE2",
-            "HADMAM", "HOWLONG", "HADPAP2", "LASTPAP2", "HPVTEST", "HPLSTTST", "HADHYST2",
-            "PROFEXAM", "LENGEXAM", "BLDSTOOL", "LSTBLDS3", "HADSIGM3",
-            "HADSGCO1", "LASTSIG3", "PCPSAAD2", "PCPSADI1", "PCPSARE1",
-            "PSATEST1", "PSATIME", "PCPSARS1", "PCPSADE1", "PCDMDECN"
-        ],
-        "derived": ["_RFSEAT2", "_RFSEAT3", "_FLSHOT6", "_PNEUMO2", "_AIDTST3"]
-    },
+    "preventive_health_screening": [
+        "SEATBELT", "FLUSHOT6", "FLSHTMY2", "IMFVPLAC", "PNEUVAC3", "HIVTST6",
+        "HIVTSTD3", "WHRTST10", "TETANUS", "HPVADVC2", "HPVADSHT", "SHINGLE2", "HADMAM",
+        "HOWLONG", "HADPAP2", "LASTPAP2", "HPVTEST", "HPLSTTST", "HADHYST2", "PROFEXAM",
+        "LENGEXAM", "BLDSTOOL", "LSTBLDS3", "HADSIGM3", "HADSGCO1", "LASTSIG3",
+        "PCPSAAD2", "PCPSADI1", "PCPSARE1", "PSATEST1", "PSATIME", "PCPSARS1",
+        "PCPSADE1", "PCDMDECN", "_RFSEAT2", "_RFSEAT3", "_FLSHOT6", "_PNEUMO2", "_AIDTST3"],
 
-    "vision": {
-        "original": [
-            "VIDFCLT2", "VIREDIF3", "VIPRFVS2", "VINOCRE2", "VIEYEXM2",
-            "VIINSUR2", "VICTRCT4", "VIGLUMA2", "VIMACDG2"
-        ],
-        "derived": []
-    },
+    "vision": [
+        "VIDFCLT2", "VIREDIF3", "VIPRFVS2", "VINOCRE2", "VIEYEXM2", "VIINSUR2",
+        "VICTRCT4", "VIGLUMA2", "VIMACDG2"],
 
-    "cognitive_health": {
-        "original": ["CIMEMLOS", "CDHOUSE", "CDASSIST", "CDHELP", "CDSOCIAL", "CDDISCUS"],
-        "derived": []
-    },
+    "cognitive_health": [
+        "CIMEMLOS", "CDHOUSE", "CDASSIST", "CDHELP", "CDSOCIAL", "CDDISCUS"],
 
-    "mental_health": {
-        "original": [
-            "ADDEPEV2", "ADPLEASR", "ADDOWN", "ADSLEEP", "ADENERGY",
-            "ADEAT1", "ADFAIL", "ADTHINK", "ADMOVE", "MISTMNT", "ADANXEV"
-        ],
-        "derived": []
-    },
+    "mental_health": [
+        "ADDEPEV2", "ADPLEASR", "ADDOWN", "ADSLEEP", "ADENERGY", "ADEAT1", "ADFAIL",
+        "ADTHINK", "ADMOVE", "MISTMNT", "ADANXEV"],
 
-    "social_context": {
-        "original": [
-            "SCNTMNY1", "SCNTMEL1", "SCNTPAID", "SCNTWRK1",
-            "SCNTLPAD", "SCNTLWK1", "EMTSUPRT", "LSATISFY"
-        ],
-        "derived": []
-    },
+    "social_context": [
+        "SCNTMNY1", "SCNTMEL1", "SCNTPAID", "SCNTWRK1", "SCNTLPAD", "SCNTLWK1",
+        "EMTSUPRT", "LSATISFY"],
 
-    "caregiving_child": {
-        "original": [
-            "CAREGIV1", "CRGVREL1", "CRGVLNG1", "CRGVHRS1", "CRGVPRB1",
-            "CRGVPERS", "CRGVHOUS", "CRGVMST2", "CRGVEXPT",
-            "RCSGENDR", "RCSRLTN2", "CASTHDX2", "CASTHNO2"
-        ],
-        "derived": ["_CHISPNC", "_CRACE1", "_CPRACE"]
-    }
+    "caregiving_child": [
+        "CAREGIV1", "CRGVREL1", "CRGVLNG1", "CRGVHRS1", "CRGVPRB1", "CRGVPERS",
+        "CRGVHOUS", "CRGVMST2", "CRGVEXPT", "RCSGENDR", "RCSRLTN2", "CASTHDX2",
+        "CASTHNO2", "_CHISPNC", "_CRACE1", "_CPRACE"],
 }
 
 FEATURE_TYPE_GROUPS = {
@@ -378,6 +303,20 @@ VALUE_RECODES = {'PHYSHLTH': {88: 0},
  'FVORANG': {555: 0},
  'VEGETAB1': {555: 0}}
 
+# features not used for modeling
+EXCLUDED_FEATURES = [
+    # record identifiers
+    "SEQNO", "_PSU",
+    # survey design variables and sampling weights
+    "_STSTR", "_STRWT", "_RAWRAKE", "_WT2RAKE", "_CLLCPWT", "_LLCPWT", "_DUALCOR",
+    # survey administration
+    "CTELENUM", "CTELNUM1", "CELLFON2", "STATERES", "COLGHOUS", "CCLGHOUS",
+    "LADULT", "DISPCODE", "QSTVER",
+    # interview date
+    "FMONTH", "IDATE", "IMONTH", "IDAY", "IYEAR",
+    # dates of last flu shot or HIV test in form of month-year codes
+    "FLSHTMY2", "HIVTSTD3"]
+
 # build lookup dictionaries
 _type = {}
 _response = {}
@@ -393,16 +332,14 @@ for s, features in NONRESPONSE_GROUPS.items():
         _response[f] = s
 
 FEATURE_INFO = {}
-for category, sources in FEATURE_GROUPS.items():
-    for source_type, features in sources.items():
-        for f in features:
-            scheme = _response.get(f)
-            FEATURE_INFO[f] = {
-                "category": category,
-                "type": source_type,
-                "data_type": _type[f],
-                "nonresponse_codes": {k: v.copy() for k, v in NONRESPONSE_PATTERNS.get(scheme, {}).items()},
-                "value_recode": VALUE_RECODES.get(f, {}).copy(),
-                "non_numeric_valid_codes": NON_NUMERIC_VALID_CODES.get(f, []).copy(),
-                "ordinal_levels": ORDINAL_LEVELS[f].copy() if f in ORDINAL_LEVELS else None,
-            }
+for category, features in FEATURE_GROUPS.items():
+    for f in features:
+        scheme = _response.get(f)
+        FEATURE_INFO[f] = {
+            "category": category,
+            "data_type": _type[f],
+            "nonresponse_codes": {k: v.copy() for k, v in NONRESPONSE_PATTERNS.get(scheme, {}).items()},
+            "value_recode": VALUE_RECODES.get(f, {}).copy(),
+            "non_numeric_valid_codes": NON_NUMERIC_VALID_CODES.get(f, []).copy(),
+            "ordinal_levels": ORDINAL_LEVELS[f].copy() if f in ORDINAL_LEVELS else None,
+        }
