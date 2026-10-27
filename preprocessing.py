@@ -61,13 +61,15 @@ def drop_high_missing_features(x_train, x_test, header, threshold=0.9):
 
 
 
-def build_feature_matrix(x_train, x_test, header):
+def build_feature_matrix(x_train, x_test, header, impute_settings=None):
     """Transform the raw train and test data into feature matrices.
 
     For each feature, the valid values are computed on the train set and reused
     on the test set, so both matrices have exactly the same columns.
 
     Returns X_train (N_train, D), X_test (N_test, D) and the names of the D columns.
+
+    Impute_settings: optional dict {data_type: impute_setting} overriding the transforms' defaults.
     """
     blocks_train = []
     blocks_test = []
@@ -82,13 +84,16 @@ def build_feature_matrix(x_train, x_test, header):
         if data_type not in TRANSFORMS:
             continue
 
-        # transform train (valid values, imputation and standardization parameters computed),
-        # then test (the train parameters are reused)
+        # imputation setting for this data type if one is given, otherwise the transform's default
+        options = {}
+        if impute_settings is not None and data_type in impute_settings:
+            options["impute_setting"] = impute_settings[data_type]
+
         transformed_x_train, valid_values, impute_param, standardize_param = TRANSFORMS[data_type](
-            name, x_train[:, i], replace_nonresponse=True)
+            name, x_train[:, i], replace_nonresponse=True, **options)
         transformed_x_test, _, _, _ = TRANSFORMS[data_type](
             name, x_test[:, i], valid_values, replace_nonresponse=True,
-            impute_param=impute_param, standardize_param=standardize_param)
+            impute_param=impute_param, standardize_param=standardize_param, **options)
 
         # binary returns a (N,) vector and categorical returns uint8 -> everything to (N, k) float
         transformed_x_train = transformed_x_train.reshape(x_train.shape[0], -1).astype(float)

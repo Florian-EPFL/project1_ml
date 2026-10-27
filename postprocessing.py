@@ -11,7 +11,7 @@ def compute_metrics(y_true, y_pred):
     recall = tp / (tp + fn) if tp + fn > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0.0
 
-    return {"accuracy": accuracy, "precision": precision, "recall": recall, "f1": f1}
+    return {"accuracy": float(accuracy), "precision": float(precision), "recall": float(recall), "f1": float(f1)}
 
 
 def find_best_threshold(y, proba, thresholds=np.linspace(0.05, 0.95, 91)):
