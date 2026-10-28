@@ -1,6 +1,10 @@
 import numpy as np
 from feature_metadata import FEATURE_INFO
-from feature_imputation import *
+from feature_imputation import (
+    impute_none, impute_mode, impute_median, impute_random,
+    get_nonresponse_codes, apply_value_recodes,
+    missingness_indicator, standardize_feature,
+)
 
 IMPUTE = {
     "none": impute_none,
