@@ -10,8 +10,7 @@ The method, the experiments and the results are described in the report: **`repo
 
 ## Dataset (important)
 
-The dataset is **not** included in this repository. Before running anything, download it from the
-[AIcrowd competition page](https://www.aicrowd.com/challenges/epfl-machine-learning-project-1) and place the three files **in `./data/dataset`** (relative to the root of the repository), keeping their original names:
+The dataset is **not** included in this repository. Before running anything, exctract it from the **.zip** folder (**data/dataset_to_release.zip**) and place it **in `./data`** (relative to the root of the repository), keeping their original names:
 
 ```
 data/
@@ -21,7 +20,7 @@ data/
     └── x_test.csv
 ```
 
-The code reads the data from `./data/dataset` (see `data_path` in `run.ipynb`), so all scripts and notebooks must be run **from the root of the repository**. The `data/` folder is not versioned.
+The code reads the data from `./data/dataset` (see `data_path` in `run.ipynb`), so all scripts and notebooks must be run **from the root of the repository**.
 
 ---
 
